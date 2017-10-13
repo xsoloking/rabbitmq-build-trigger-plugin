@@ -4,6 +4,7 @@
 package org.jenkinsci.plugins.rabbitmqbuildtrigger;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -25,6 +26,7 @@ import hudson.Launcher;
 import hudson.model.BuildListener;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
+import hudson.model.Result;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
@@ -102,6 +104,19 @@ public class RemoteBuildPublisher extends Notifier {
     } 
     
     /**
+     * Gets result as string.
+     *
+     * @param result the result.
+     */
+    private String getResultAsString(Result result) {
+        String retStr = "ONGOING";
+        if (result != null) {
+            retStr = result.toString();
+       }
+       return retStr;
+    }
+
+    /**
      * @inheritDoc
      */
     public BuildStepMonitor getRequiredMonitorService() {
@@ -123,7 +138,7 @@ public class RemoteBuildPublisher extends Notifier {
         JSONObject json = new JSONObject();
         json.put(KEY_PROJECT, build.getProject().getName());
         json.put(KEY_NUMBER, build.getNumber());
-        json.put(KEY_STATUS, build.getResult().toString());
+        json.put(KEY_STATUS, getResultAsString(build.getResult()));
 
         // Basic property
         BasicProperties.Builder builder = new BasicProperties.Builder();
@@ -132,7 +147,10 @@ public class RemoteBuildPublisher extends Notifier {
 
         // Header
         Map<String, Object> headers = new HashMap<String, Object>();
-        headers.put(HEADER_JENKINS_URL, Jenkins.getInstance().getRootUrl());
+        Jenkins jenkins = Jenkins.getInstance();
+        if (jenkins != null) {
+            headers.put(HEADER_JENKINS_URL, jenkins.getRootUrl());
+        }
         builder.headers(headers);
 
         // Publish message
@@ -140,7 +158,8 @@ public class RemoteBuildPublisher extends Notifier {
         if (ch != null && ch.isOpen()) {
             if (brokerName != null) {
                 // return value is not needed if you don't need to wait.
-                Future<PublishResult> future = ch.publish(brokerName, routingKey, builder.build(), json.toString().getBytes());
+                Future<PublishResult> future = ch.publish(brokerName, routingKey, builder.build(),
+                                                          json.toString().getBytes(StandardCharsets.UTF_8));
 
                 // Wait until publish is completed.
                 try {

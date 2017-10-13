@@ -67,14 +67,17 @@ public class RemoteBuildTrigger<T extends Job<?, ?> & ParameterizedJobMixIn.Para
 
         if (listener != null) {
             listener.addTrigger(this);
+            removeDuplicatedTrigger(listener.getTriggers());
         }
         super.start(project, newInstance);
-        removeDuplicatedTrigger(listener.getTriggers());
     }
 
     @Override
     public void stop() {
-        MessageQueueListener.all().get(RemoteBuildListener.class).removeTrigger(this);
+        RemoteBuildListener listener = MessageQueueListener.all().get(RemoteBuildListener.class);
+        if (listener != null) {
+            listener.removeTrigger(this);
+        }
         super.stop();
     }
 
@@ -222,10 +225,13 @@ public class RemoteBuildTrigger<T extends Job<?, ?> & ParameterizedJobMixIn.Para
             @Override
             public void onLoaded() {
                 RemoteBuildListener listener = MessageQueueListener.all().get(RemoteBuildListener.class);
-                for (Project<?, ?> p : Jenkins.getInstance().getAllItems(Project.class)) {
-                    RemoteBuildTrigger t = p.getTrigger(RemoteBuildTrigger.class);
-                    if (t != null) {
-                        listener.addTrigger(t);
+                Jenkins jenkins = Jenkins.getInstance();
+                if (jenkins != null) {
+                    for (Project<?, ?> p : jenkins.getAllItems(Project.class)) {
+                        RemoteBuildTrigger t = p.getTrigger(RemoteBuildTrigger.class);
+                        if (t != null) {
+                            listener.addTrigger(t);
+                        }
                     }
                 }
             }

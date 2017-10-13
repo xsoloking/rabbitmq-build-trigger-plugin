@@ -1,0 +1,20 @@
+<FindBugsFilter>
+    <!-- NM_METHOD_NAMING_CONVENTION -->
+    <Match>
+        <Class name="org.jenkinsci.plugins.rabbitmqbuildtrigger.Messages" />
+        <Method name="RabbitMQBuildPublisher" />
+        <Bug pattern="NM_METHOD_NAMING_CONVENTION" />
+    </Match>
+    <Match>
+        <Class name="org.jenkinsci.plugins.rabbitmqbuildtrigger.Messages" />
+        <Method name="RabbitMQBuildTrigger" />
+        <Bug pattern="NM_METHOD_NAMING_CONVENTION" />
+    </Match>
+
+    <!-- CN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE -->
+    <Match>
+        <Class name="org.jenkinsci.plugins.rabbitmqbuildtrigger.RemoteBuildPublisher" />
+        <Method name="perform" />
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+    </Match>
+</FindBugsFilter>
