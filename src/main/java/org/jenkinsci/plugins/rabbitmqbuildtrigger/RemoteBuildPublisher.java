@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.jenkinsci.plugins.rabbitmqbuildtrigger;
 
 import java.io.IOException;
@@ -54,8 +51,9 @@ public class RemoteBuildPublisher extends Notifier {
 
     /**
      * Creates instance with specified parameters.
-     * @param brokerName
-     * @param routingKey
+     *
+     * @param brokerName the broker name.
+     * @param routingKey the routing key.
      */
     @DataBoundConstructor
     public RemoteBuildPublisher(String brokerName, String routingKey) {
@@ -107,6 +105,7 @@ public class RemoteBuildPublisher extends Notifier {
      * Gets result as string.
      *
      * @param result the result.
+     * @return the result string.
      */
     private String getResultAsString(Result result) {
         String retStr = "ONGOING";
