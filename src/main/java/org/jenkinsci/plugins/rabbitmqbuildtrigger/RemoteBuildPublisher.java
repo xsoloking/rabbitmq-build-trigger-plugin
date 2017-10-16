@@ -156,24 +156,22 @@ public class RemoteBuildPublisher extends Notifier {
         // Publish message
         PublishChannel ch = PublishChannelFactory.getPublishChannel();
         if (ch != null && ch.isOpen()) {
-            if (brokerName != null) {
-                // return value is not needed if you don't need to wait.
-                Future<PublishResult> future = ch.publish(brokerName, routingKey, builder.build(),
-                                                          json.toString().getBytes(StandardCharsets.UTF_8));
+            // return value is not needed if you don't need to wait.
+            Future<PublishResult> future = ch.publish(brokerName, routingKey, builder.build(),
+                                                      json.toString().getBytes(StandardCharsets.UTF_8));
 
-                // Wait until publish is completed.
-                try {
-                    PublishResult result = future.get();
+            // Wait until publish is completed.
+            try {
+                PublishResult result = future.get();
 
-                    if (result.isSuccess()) {
-                        listener.getLogger().println(LOG_HEADER + "Success.");
-                    } else {
-                        listener.getLogger().println(LOG_HEADER + "Fail - " + result.getMessage());
-                    }
-                } catch (Exception e) {
-                    LOGGER.warning(e.getMessage());
-                    listener.getLogger().println(LOG_HEADER + "Fail due to exception.");
+                if (result.isSuccess()) {
+                    listener.getLogger().println(LOG_HEADER + "Success.");
+                } else {
+                    listener.getLogger().println(LOG_HEADER + "Fail - " + result.getMessage());
                 }
+            } catch (Exception e) {
+                LOGGER.warning(e.getMessage());
+                listener.getLogger().println(LOG_HEADER + "Fail due to exception.");
             }
         }
         return true;

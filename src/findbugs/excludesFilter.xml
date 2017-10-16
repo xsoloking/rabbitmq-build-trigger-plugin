@@ -10,11 +10,4 @@
         <Method name="RabbitMQBuildTrigger" />
         <Bug pattern="NM_METHOD_NAMING_CONVENTION" />
     </Match>
-
-    <!-- CN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE -->
-    <Match>
-        <Class name="org.jenkinsci.plugins.rabbitmqbuildtrigger.RemoteBuildPublisher" />
-        <Method name="perform" />
-        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
-    </Match>
 </FindBugsFilter>
