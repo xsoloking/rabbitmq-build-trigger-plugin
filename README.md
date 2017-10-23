@@ -77,7 +77,7 @@ to *triggers* directive in pipeline script.
 
 This can be used in *Jenkinsfile* e.g:
 
-```json
+```
 pipeline {
     triggers {
         remoteBuild('<TOKEN>')
