@@ -69,6 +69,22 @@ content_type: application/json
 app_id: remote-build
 ```
 
+Pipeline support
+------------------------
+
+This plugin can trigger pipeline jobs. In addition, this provides a trigger *remoteBuild*
+to *triggers* directive in pipeline script.
+
+This can be used in *Jenkinsfile* e.g:
+
+```
+pipeline {
+    triggers {
+        remoteBuild('**TOKEN**')
+    }
+}
+```
+
 Material
 ------------------------
 
