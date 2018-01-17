@@ -202,7 +202,7 @@ public class RemoteBuildTrigger<T extends Job<?, ?> & ParameterizedJobMixIn.Para
      *
      * @author rinrinne a.k.a. rin_ne
      */
-    @Extension @Symbol("remoteBuild")
+    @Extension @Symbol("rmqRemoteBuild")
     public static class DescriptorImpl extends TriggerDescriptor {
 
         @Override
