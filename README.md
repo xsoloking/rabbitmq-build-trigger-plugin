@@ -72,7 +72,7 @@ app_id: remote-build
 Pipeline support
 ------------------------
 
-This plugin can trigger pipeline jobs. In addition, this provides a trigger *remoteBuild*
+This plugin can trigger pipeline jobs. In addition, this provides a trigger *rmqRemoteBuild*
 to *triggers* directive in pipeline script.
 
 This can be used in *Jenkinsfile* e.g:
@@ -80,7 +80,7 @@ This can be used in *Jenkinsfile* e.g:
 ```
 pipeline {
     triggers {
-        remoteBuild('<TOKEN>')
+        rmqRemoteBuild('<TOKEN>')
     }
 }
 ```
