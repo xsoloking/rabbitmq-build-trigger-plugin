@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>2.36</version>
+    <version>3.2</version>
   </parent>
 
   <artifactId>rabbitmq-build-trigger</artifactId>
@@ -18,7 +18,7 @@
       <name>MIT</name>
       <url>http://www.opensource.org/licenses/mit-license.php</url>
       <comments>
-        Copyright 2013 rinrinne a.k.a. rin_ne. All rights reserved.
+        Copyright 2013-2018 rinrinne a.k.a. rin_ne. All rights reserved.
       </comments>
     </license>
   </licenses>
@@ -44,15 +44,15 @@
          ~ hpi-plugin.version: The HPI Maven Plugin version used by the plugin..
          ~ stapler-plugin.version: The Stapler Maven plugin version required by the plugin.
     -->
-    <jmockit.version>1.5</jmockit.version>
+    <jmockit.version>1.38</jmockit.version>
     <rabbitmq.consumer.version>2.5</rabbitmq.consumer.version>
     <structs.version>1.10</structs.version>
-    <commons.lang3.version>3.6</commons.lang3.version>
+    <commons.lang3.version>3.7</commons.lang3.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>com.googlecode.jmockit</groupId>
+      <groupId>org.jmockit</groupId>
       <artifactId>jmockit</artifactId>
       <version>${jmockit.version}</version>
       <scope>test</scope>

@@ -13,7 +13,7 @@ import hudson.tasks.Shell;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import mockit.Mocked;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Verifications;
 
 import org.apache.commons.io.FileUtils;
@@ -80,10 +80,10 @@ public class JenkinsTest {
 
     @Test
     public void testTriggerWithPublisher() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             PublishChannelFactory.getPublishChannel(); result = channel;
             channel.isOpen(); result = true;
-            channel.publish(anyString, anyString, (AMQP.BasicProperties)any, new byte[]{anyByte}); result = future;
+            channel.publish(anyString, anyString, (AMQP.BasicProperties)any, new byte[]{anyByte}); result = future; minTimes = 0;
             future.get(); result = new PublishResult(true, "", "");
         }};
         RemoteBuildTrigger trigger = new RemoteBuildTrigger("trigger-token");
