@@ -136,11 +136,13 @@ public class RemoteBuildTrigger<T extends Job<?, ?> & ParameterizedJobMixIn.Para
      *            the content of application message.
      */
     public void scheduleBuild(String queueName, JSONArray jsonArray) {
-        if (jsonArray != null) {
-            List<ParameterValue> parameters = getUpdatedParameters(jsonArray, getDefinitionParameters(job));
-            ParameterizedJobMixIn.scheduleBuild2(job, 0, new CauseAction(new RemoteBuildCause(queueName)), new ParametersAction(parameters));
-        } else {
-            ParameterizedJobMixIn.scheduleBuild2(job, 0, new CauseAction(new RemoteBuildCause(queueName)));
+        if (job != null) {
+          if (jsonArray != null) {
+              List<ParameterValue> parameters = getUpdatedParameters(jsonArray, getDefinitionParameters(job));
+              ParameterizedJobMixIn.scheduleBuild2(job, 0, new CauseAction(new RemoteBuildCause(queueName)), new ParametersAction(parameters));
+          } else {
+              ParameterizedJobMixIn.scheduleBuild2(job, 0, new CauseAction(new RemoteBuildCause(queueName)));
+          }
         }
     }
 
