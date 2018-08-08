@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.rabbitmqconsumer.publishers.PublishChannel;
 import org.jenkinsci.plugins.rabbitmqconsumer.publishers.PublishChannelFactory;
 import org.jenkinsci.plugins.rabbitmqconsumer.publishers.PublishResult;
@@ -112,7 +113,7 @@ public class RemoteBuildPublisher extends Notifier {
      * @return the result string.
      */
     private String getResultAsString(Result result) {
-        String retStr = "ONGOING";
+        String retStr = "SUCCESS";
         if (result != null) {
             retStr = result.toString();
         }
@@ -195,6 +196,7 @@ public class RemoteBuildPublisher extends Notifier {
      * @author rinrinne a.k.a. rin_ne
      */
     @Extension
+    @Symbol("rmqRemotePublish")
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
         /**
