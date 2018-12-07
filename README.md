@@ -86,7 +86,7 @@ pipeline {
     }
     post {
       always {
-        rmqRemotePublish('<EXCHANGE>', '<ROUTINGKEY>')
+        rmqRemotePublish(brokerName: '<EXCHANGE>', routingKey: '<ROUTINGKEY>')
       }
     }
 }

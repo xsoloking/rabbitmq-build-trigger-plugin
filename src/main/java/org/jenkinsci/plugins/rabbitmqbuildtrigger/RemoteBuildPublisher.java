@@ -178,6 +178,8 @@ public class RemoteBuildPublisher extends Notifier {
                 LOGGER.warning(e.getMessage());
                 listener.getLogger().println(LOG_HEADER + "Fail due to exception.");
             }
+        } else {
+          listener.getLogger().println(LOG_HEADER + "Unpublished due to no avaiable publish channel");
         }
         return true;
     }
