@@ -80,7 +80,7 @@ This can be used in *Jenkinsfile* e.g:
 ```
 pipeline {
     triggers {
-        rmqRemoteBuild('<TOKEN>')
+        rmqRemoteBuild(remoteBuildToken: '<TOKEN>')
     }
 }
 ```
