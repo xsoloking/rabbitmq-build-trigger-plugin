@@ -92,21 +92,27 @@ public class RemoteBuildListener extends MessageQueueListener {
                 String msg = new String(body, "UTF-8");
                 try {
                     JSONObject json = (JSONObject) JSONSerializer.toJSON(msg);
+                    boolean matched = false;
                     for (RemoteBuildTrigger t : triggers) {
 
                         if (t.getRemoteBuildToken() == null) {
                             LOGGER.log(Level.WARNING, "ignoring AMQP trigger for project {0}: no token set", t.getProjectName());
                             continue;
                         }
-
                         if (t.getProjectName().equals(json.getString(KEY_PROJECT))
                                 && t.getRemoteBuildToken().equals(json.getString(KEY_TOKEN))) {
                             if (json.containsKey(KEY_PARAMETER)) {
                                 t.scheduleBuild(queueName, json.getJSONArray(KEY_PARAMETER));
+                                LOGGER.log(Level.FINE, "triggered project: {0} with parameter: {1}", new Object[] { t.getProjectName(), json.getJSONArray(KEY_PARAMETER) });
                             } else {
                                 t.scheduleBuild(queueName, null);
                             }
+                            matched = true;
+                            break;
                         }
+                    }
+                    if (!matched) {
+                        LOGGER.log(Level.WARNING, "due to project or token mismatch, ignoring AMQP trigger for message: {0}", msg);
                     }
                 } catch (JSONException e) {
                     LOGGER.warning("JSON format string: " + msg);

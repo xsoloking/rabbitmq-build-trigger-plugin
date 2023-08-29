@@ -3,11 +3,11 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>3.2</version>
+    <version>4.72</version>
   </parent>
 
   <artifactId>rabbitmq-build-trigger</artifactId>
-  <version>2.6-SNAPSHOT</version>
+  <version>2.6-jdk17</version>
   <packaging>hpi</packaging>
   <name>RabbitMQ Build Trigger Plugin</name>
   <description>A plugin that trigger build by message from RabbitMQ.</description>
@@ -34,9 +34,9 @@
 
   <properties>
     <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
-    <jenkins.version>2.7.1</jenkins.version>
+    <jenkins.version>2.361.4</jenkins.version>
     <!-- Java Level to use. Java 7 required when using core >= 1.612 -->
-    <java.level>7</java.level>
+<!--    <java.level>11</java.level>-->
     <!-- Jenkins Test Harness version you use to test the plugin. -->
     <!-- For Jenkins version >= 1.580.1 use JTH 2.x or higher. -->
     <!-- Other properties you may want to use:
@@ -44,10 +44,10 @@
          ~ hpi-plugin.version: The HPI Maven Plugin version used by the plugin..
          ~ stapler-plugin.version: The Stapler Maven plugin version required by the plugin.
     -->
-    <jmockit.version>1.38</jmockit.version>
-    <rabbitmq.consumer.version>2.8</rabbitmq.consumer.version>
-    <structs.version>1.10</structs.version>
-    <commons.lang3.version>3.7</commons.lang3.version>
+    <jmockit.version>1.49</jmockit.version>
+    <rabbitmq.consumer.version>2.9-jdk17</rabbitmq.consumer.version>
+    <structs.version>325.vcb_307d2a_2782</structs.version>
+    <commons.lang3.version>3.12.0</commons.lang3.version>
   </properties>
 
   <dependencies>
@@ -104,7 +104,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5</version>
       </plugin>
     </plugins>
   </build>
